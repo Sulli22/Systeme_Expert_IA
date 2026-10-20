@@ -8,15 +8,24 @@ class Regle:
 
     def verif(self, liste_fait):
         i = 0
-        while(i<len(self.si) and (self.si[i] in liste_fait)):
-            i += 1
+        j = 0
+        while(j<len(self.alors) and (self.alors[j] in liste_fait)):
+            j+=1
+
+        if(j<len(self.alors)):
+            while(i<len(self.si) and (self.si[i] in liste_fait)):
+                i += 1
+        else:
+            return False
 
         return i>=len(self.si)
+
+    def verif_alors(self,but):
+        return but in self.alors
+
     
 
-    def ajout_si(self, attribut, etat):
-        if ((attribut is not None) and (etat is not None)):
-            self.si.append((attribut, etat))
+    
 
     def ajout_si(self, attribut,operateur, etat):
         if ((attribut is not None) and (etat is not None) and (operateur is not None)):
@@ -26,12 +35,7 @@ class Regle:
             print("Problème sur l'attribut ou l'état")
 
 
-    def ajout_alors(self, attribut, etat):
-            if ((attribut is not None) and (etat is not None)):
-                self.alors.append((attribut, etat))
-    
-            else:
-                print("Problème sur l'attribut ou l'état")
+   
 
     def ajout_alors(self, attribut,operateur, etat):
             if ((attribut is not None) and (etat is not None) and (operateur is not None)):
