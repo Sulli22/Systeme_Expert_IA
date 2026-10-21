@@ -18,37 +18,22 @@ def charger_regles(nom_fichier):
                 if aux[0]=='R':
                     regle=Regle()
                     regle.nom=aux
-                    i=3
-                    #print(lg)
-                    while lg[i]!='ALORS' and i<len(lg):
-                      
-                        if(lg[i]!='ET'):
-                            a=lg[i]
-                            #print('a '+a)
-                            b=lg[i+1]
-                            #print('b '+b)
-                            c=lg[i+2]
-                            #print('c ' +c)
-                            i=i+3
-                            regle.ajout_si(a,b,c)
-                        else:
-                            i=i+1
-                    #print('test')
-                    i+=1
-                    while  i<len(lg):
-                        if(lg[i]!='ET'):
-                            a=lg[i]
-                            #print('a '+a)
-                            b=lg[i+1]
-                            #print('b '+b)
-                            c=lg[i+2]
-                            #print('c ' +c)
-                            i=i+3
-                            regle.ajout_alors(a,b,c)
-                        else:
-                            i=i+1
+                    lg_split = ligne.strip().split(" : ")
+                    r = lg_split[1].split(" ALORS ")
+                    si = r[0].split("SI ")[1]
+                    si_split = si.split(" ET ")
+                    for s in si_split:
+                        s_aux = s.split()
+                        regle.ajout_si(s_aux[0], s_aux[1], s_aux[2])
+                    
+                    alors = r[1]
+                    alors_split = alors.split(" ET ")
+                    for a in alors_split:
+                        a_aux = a.split()
+                        regle.ajout_alors(a_aux[0], a_aux[1], a_aux[2])
 
+                    #print(lg)
+                   
                     tab.append(regle)
         
-
     return tab             # print(lg)
