@@ -21,13 +21,11 @@ base=BaseFaits([])
 base.charger_fait('fait.txt')
 #for i in tab:
    # i.lecture()
-"""
 
-for i in base.faits:
-    print(i)
 
-if base.but_atteint():
-    print("test accomplie")
+
+
+
 
 chainage_avant(base,tab)
 
@@ -46,3 +44,4 @@ if succes:
   print("Diagnostic réussi : La cause racine a été prouvée !")
 else:
   print("Impossible de prouver cette cause avec les faits fournis.")
+"""
