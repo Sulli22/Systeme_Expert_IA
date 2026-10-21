@@ -2,6 +2,7 @@ from baseFaits import BaseFaits
 from regle import Regle
 from lecture_regle import charger_regles
 from strategies import chainage_avant,chainage_arriere
+from optimisation import plus_de_premisses
 
 """regle = Regle()
 regle.ajout_si("a", 1)
@@ -17,11 +18,12 @@ print(baseFaits.faits)
 print(baseFaits.faits)"""
 
 tab=charger_regles('regle_diag_ordi.txt')
+tab = plus_de_premisses(tab)
 base=BaseFaits([])
 base.charger_fait('fait.txt')
 
-#for i in tab:
-   # i.lecture()
+for i in tab:
+   i.lecture()
 
 
 
