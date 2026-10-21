@@ -19,6 +19,7 @@ print(baseFaits.faits)"""
 tab=charger_regles('regle_diag_ordi.txt')
 base=BaseFaits([])
 base.charger_fait('fait.txt')
+
 #for i in tab:
    # i.lecture()
 
