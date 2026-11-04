@@ -1,0 +1,177 @@
+BUT : cause_racine
+
+ PAQUET 1 : alimentation
+
+R1  : SI cable_secteur = valide ET bouton_alimentation = actionne ET voyants_led = eteints ALORS etat_alimentation = panne_alimentation_probable
+
+R2  : SI alimentation_sur_secteur = faux ET batterie_presente = vrai ET pc_fonctionne_sur_batterie = faux ALORS etat_alimentation = batterie_hs
+
+
+
+ PAQUET 2 : post_materiel
+
+R3  : SI ecran = aucun ET signal_bios = bips_continus ALORS etat_post = echec_ram_possible
+
+R4  : SI mode_extinction = brutal ET ventilateur_cpu = maximum ET temperature_cpu = critique ALORS etat_post = surchauffe_cpu_probable
+
+R5  : SI heure_systeme = reinitialisee ALORS etat_post = pile_cmos_vide_ou_faible
+
+
+
+ PAQUET 3 : systeme_exploitation
+
+R6  : SI etat_demarrage = erreur_critique ET type_ecran = ecran_bleu ET code_erreur = inaccessible_boot_device ALORS etat_os = probleme_acces_peripherique_demarrage
+
+R7  : SI sequence_demarrage = boucle ET dernier_evenement = maj_interrompue ALORS etat_os = fichiers_systeme_potentiellement_corrompus
+
+
+
+ PAQUET 4 : reseau
+
+R8  : SI icone_reseau = croix_rouge ET test_ping_passerelle = echec ALORS etat_reseau = probleme_connectivite_locale
+
+R9  : SI acces_internet = bloque ET test_ping_ip = succes ET test_resolution_dns = echec ALORS etat_reseau = erreur_dns
+
+
+
+PAQUET 5 : performance
+
+R10 : SI performance_globale = lenteur_extreme ET taux_disque = cent_pourcent ALORS etat_performance = saturation_disque_probable
+
+
+
+PAQUET 6 : diagnostic_final_initial
+
+R11 : SI etat_alimentation = panne_alimentation_probable ALORS cause_racine = panne_alimentation_a_confirmer
+
+R12 : SI etat_alimentation = batterie_hs ALORS cause_racine = batterie_hs
+
+R13 : SI etat_post = echec_ram_possible ALORS cause_racine = probleme_memoire_ram_a_confirmer
+
+R14 : SI etat_post = surchauffe_cpu_probable ALORS cause_racine = surchauffe_processeur_probable
+
+R15 : SI etat_post = pile_cmos_vide_ou_faible ALORS cause_racine = pile_cmos_a_remplacer_ou_verifier
+
+R16 : SI etat_os = probleme_acces_peripherique_demarrage ALORS cause_racine = probleme_peripherique_ou_configuration_demarrage
+
+R17 : SI etat_os = fichiers_systeme_potentiellement_corrompus ALORS cause_racine = corruption_systeme_a_verifier
+
+R18 : SI etat_reseau = probleme_connectivite_locale ALORS cause_racine = probleme_reseau_local_a_diagnostiquer
+
+R19 : SI etat_reseau = erreur_dns ALORS cause_racine = erreur_configuration_dns_probable
+
+R20 : SI etat_performance = saturation_disque_probable ALORS cause_racine = saturation_disque_a_analyser
+
+
+
+PAQUET 7 : carte_graphique
+
+R21 : SI affichage_ecran = artefacts_visuels ET ventilateur_gpu = bruyant ALORS etat_gpu = surchauffe_gpu_possible
+
+R22 : SI ecran = noir ET voyants_led = allumes ET diagnostic_bios_gpu = erreur_detectee ALORS etat_gpu = panne_materielle_gpu_possible
+
+R23 : SI systeme_exploitation = charge ET resolution_ecran = bloquee_basse ET pilote_gpu = non_installe ALORS etat_gpu = pilote_graphique_manquant
+
+R24 : SI ecran = lignes_verticales ET modification_cable_hdmi = fait_disparaitre_ou_modifier_lignes ALORS etat_gpu = cable_video_ou_connectique_defectueux
+
+R25 : SI jeux_video = plantage_systeme ET temperature_gpu = critique ALORS etat_gpu = surchauffe_gpu_possible
+
+R26 : SI sortie_video = multiple ET ecran_secondaire = non_detecte ALORS etat_gpu = probleme_sortie_video_a_diagnostiquer
+
+
+
+PAQUET 8 : stockage_avance
+
+R27 : SI smart_disque = erreur_critique ET secteurs_realloues = eleves ALORS etat_stockage = disque_fatigue_probable
+
+R28 : SI partition_systeme = raw ET acces_donnees = impossible ALORS etat_stockage = partition_ou_systeme_de_fichiers_corrompu
+
+R29 : SI installation_logiciel = echec_ecriture ET espace_disque_c = sature ALORS etat_stockage = espace_disque_insuffisant
+
+R30 : SI nvme_temperature = excessive ET vitesse_transfert = chute_brutale ALORS etat_stockage = thermal_throttling_ssd
+
+R31 : SI disque_externe = connecte ET disque_visible_explorateur = faux ET disque_visible_gestionnaire = faux ALORS etat_stockage = probleme_disque_externe_ou_connexion_usb
+
+R32 : SI type_disque = hdd ET fragmentation_logique = elevee ALORS etat_stockage = fragmentation_hdd_a_traiter
+
+
+
+PAQUET 9 : peripheriques
+
+R33 : SI clavier_usb = non_reconnu ET changement_port_usb = sans_effet ALORS etat_peripherique = probleme_clavier_ou_port_usb
+
+R34 : SI souris_curseur = saccade ET batterie_souris = faible ALORS etat_peripherique = pile_souris_usee
+
+R35 : SI audio_pc = aucun_son ET icone_haut_parleur = croix_rouge ALORS etat_peripherique = probleme_service_audio_ou_pilote
+
+R36 : SI webcam_integree = ecran_noir ET application_camera = erreur_0xa00f4244 ALORS etat_peripherique = webcam_non_detectee_a_diagnostiquer
+
+R37 : SI imprimante_usb = file_attente_bloquee ET impression_document = echec ALORS etat_peripherique = probleme_spouleur_impression_possible
+
+R38 : SI bluetooth_peripherique = introuvable ET module_bluetooth = desactive_bios ALORS etat_peripherique = module_bluetooth_inactif
+
+
+
+PAQUET 10 : securite
+
+R39 : SI navigateur_web = redirection_publicitaire ET page_accueil = modifiee_forcee ALORS etat_securite = adware_probable
+
+R40 : SI fichiers_personnels = extension_locked ET bureau_texte = note_rancon ALORS etat_securite = ransomware_tres_probable
+
+R41 : SI processus_arriere_plan = consommation_cpu_excessive ET anti_virus = desactive_force ALORS etat_securite = suspicion_infection_malware
+
+R42 : SI fenetre_pop_up = intempestives ET fausse_alerte_securite = affichee ALORS etat_securite = escroquerie_technique_probable
+
+R43 : SI systeme_exploitation = fichiers_modifies ET certificat_numerique = invalide ALORS etat_securite = suspicion_compromission_systeme
+
+R44 : SI partage_reseau = accessible_exterieur ET mot_de_passe_admin = vide ALORS etat_securite = configuration_reseau_dangereuse
+
+
+
+PAQUET 11 : diagnostic_complementaire
+
+R45 : SI etat_gpu = surchauffe_gpu_possible ALORS cause_racine = surchauffe_carte_graphique_a_verifier
+
+R46 : SI etat_gpu = panne_materielle_gpu_possible ALORS cause_racine = panne_materielle_gpu_a_confirmer
+
+R47 : SI etat_stockage = disque_fatigue_probable ALORS cause_racine = usure_disque_dur_ou_ssd_probable
+
+R48 : SI etat_peripherique = probleme_clavier_ou_port_usb ALORS cause_racine = panne_clavier_ou_port_usb_a_isoler
+
+R49 : SI etat_securite = adware_probable ALORS cause_racine = logiciel_publicitaire_probable
+
+R50 : SI etat_securite = ransomware_tres_probable ALORS cause_racine = attaque_ransomware_probable
+
+R51 : SI etat_gpu = pilote_graphique_manquant ALORS cause_racine = pilote_graphique_manquant
+
+R52 : SI etat_gpu = cable_video_ou_connectique_defectueux ALORS cause_racine = probleme_cable_video_ou_connectique
+
+R53 : SI etat_gpu = probleme_sortie_video_a_diagnostiquer ALORS cause_racine = probleme_sortie_video_ou_configuration
+
+R54 : SI etat_stockage = partition_ou_systeme_de_fichiers_corrompu ALORS cause_racine = corruption_partition_ou_systeme_fichiers
+
+R55 : SI etat_stockage = espace_disque_insuffisant ALORS cause_racine = espace_disque_sature
+
+R56 : SI etat_stockage = thermal_throttling_ssd ALORS cause_racine = surchauffe_ssd
+
+R57 : SI etat_stockage = probleme_disque_externe_ou_connexion_usb ALORS cause_racine = probleme_disque_externe_cable_ou_boiter
+
+R58 : SI etat_stockage = fragmentation_hdd_a_traiter ALORS cause_racine = fragmentation_disque_dur_mecanique
+
+R59 : SI etat_peripherique = pile_souris_usee ALORS cause_racine = batterie_souris_faible
+
+R60 : SI etat_peripherique = probleme_service_audio_ou_pilote ALORS cause_racine = probleme_audio_pilote_ou_service
+
+R61 : SI etat_peripherique = webcam_non_detectee_a_diagnostiquer ALORS cause_racine = probleme_detection_webcam
+
+R62 : SI etat_peripherique = probleme_spouleur_impression_possible ALORS cause_racine = probleme_spouleur_impression
+
+R63 : SI etat_peripherique = module_bluetooth_inactif ALORS cause_racine = bluetooth_desactive_dans_bios
+
+R64 : SI etat_securite = suspicion_infection_malware ALORS cause_racine = infection_malware_a_verifier
+
+R65 : SI etat_securite = escroquerie_technique_probable ALORS cause_racine = tentative_escroquerie_support_technique
+
+R66 : SI etat_securite = suspicion_compromission_systeme ALORS cause_racine = compromission_systeme_a_verifier
+
+R67 : SI etat_securite = configuration_reseau_dangereuse ALORS cause_racine = exposition_reseau_et_authentification_faible
