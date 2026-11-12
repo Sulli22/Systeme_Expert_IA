@@ -1,6 +1,6 @@
 
 
-
+from Fait import fait
 
 
 class Regle:
@@ -12,10 +12,14 @@ class Regle:
         self.alors = []
 
     def valid(self, cond, liste_fait):
-        var_cond, op_cond, val_cond = cond
+        var_cond=cond.attribut
+        op_cond=cond.operateur
+        val_cond=cond.valeur
         if op_cond in ("=", "!="):
             for fait in liste_fait:
-                var_fait, op_fait, val_fait = fait
+                var_fait=fait.attribut
+                op_fait=fait.operateur
+                val_fait=fait.valeur
                 
                 if var_cond == var_fait and val_cond == val_fait:
                     if op_fait == "=" and op_cond == "!=":
@@ -29,7 +33,9 @@ class Regle:
         
         elif op_cond in ("<", "<=", ">=", ">"):
             for fait in liste_fait:
-                var_fait, op_fait, val_fait = fait
+                var_fait=fait.attribut
+                op_fait=fait.operateur
+                val_fait=fait.valeur
                 
                 if var_cond == var_fait:
                     try:
@@ -72,7 +78,7 @@ class Regle:
 
     def ajout_si(self, attribut,operateur, etat):
         if ((attribut is not None) and (etat is not None) and (operateur is not None)):
-            self.si.append((attribut,operateur, etat))
+            self.si.append(fait(attribut,operateur, etat))
 
         else:
             print("Problème sur l'attribut ou l'état")
@@ -82,7 +88,7 @@ class Regle:
 
     def ajout_alors(self, attribut,operateur, etat):
             if ((attribut is not None) and (etat is not None) and (operateur is not None)):
-                self.alors.append((attribut,operateur, etat))
+                self.alors.append(fait(attribut,operateur, etat))
     
             else:
                 print("Problème sur l'attribut ou l'état")
