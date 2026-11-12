@@ -17,20 +17,23 @@ print(baseFaits.faits)
 
 print(baseFaits.faits)"""
 
-tab=charger_regles('regle_diag_ordi.txt')
-tab = plus_de_premisses(tab)
+tab=charger_regles('data/regle_diag_ordi.txt')
+tabSansPaquets = tab["regles_sans_paquets"]
+tabPaquets = tab["regles_paquets"]
+tabSansPaquets = plus_de_premisses(tabSansPaquets)
 base=BaseFaits([])
-base.charger_fait('fait.txt')
-
-for i in tab:
-   i.lecture()
-
-
-
+base.charger_fait('data/fait.txt')
+for i in tabPaquets:
+    print(i)
+for i in tabSansPaquets:
+   print(i)
 
 
 
-chainage_avant(base,tab)
+
+
+
+chainage_avant(base,tabSansPaquets)
 
 
 for i in base.faits:

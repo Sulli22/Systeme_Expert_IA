@@ -1,7 +1,9 @@
 from regle import Regle
+from paquet import Paquet
 
 def charger_regles(nom_fichier):
     tab=[]
+    tabPaquets = []
     with open(nom_fichier, 'r') as f:
       lignes = f.readlines()  # Retourne une liste
 
@@ -11,8 +13,10 @@ def charger_regles(nom_fichier):
         if lg!=[]:
             aux=lg[0]
             if aux=='PAQUET':
-
-                print('paquet')
+                p = Paquet()
+               # print('paquet')
+                tabPaquets.append(p)
+               
 
             else:
                 if aux[0]=='R':
@@ -35,5 +39,9 @@ def charger_regles(nom_fichier):
                     #print(lg)
                    
                     tab.append(regle)
-        
-    return tab             # print(lg)
+                    dernierPaquet = tabPaquets[len(tabPaquets)-1]
+                    dernierPaquet.ajouterRegle(regle)
+   
+    return {"regles_sans_paquets":tab, "regles_paquets":tabPaquets}             # print(lg)
+
+

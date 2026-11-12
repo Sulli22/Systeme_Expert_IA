@@ -51,7 +51,7 @@ class BaseFaits:
                 self.faits.append(alors)
 
 
-    def but_atteint(self):
+    def but_atteint(self, but):
         for i in self.faits:
             if 'cause_racine' == i[0]:
                 return True

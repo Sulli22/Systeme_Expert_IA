@@ -87,11 +87,15 @@ class Regle:
             else:
                 print("Problème sur l'attribut ou l'état")
 
-    def lecture(self):
-        print(self.nom)
-        print('SI')
-        for i in self.si:
-            print(i)
-        print('ALORS')
-        for j in self.alors:
-            print(j)
+    def __str__(self):
+        resultat =  self.nom + " SI "
+        for premisse in self.si:
+            for i in premisse:
+                resultat += i+" "
+            
+        resultat += " ALORS "
+        for a in self.alors:
+            for i in a:
+                resultat += i+" "
+        return resultat
+    

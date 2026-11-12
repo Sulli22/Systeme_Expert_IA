@@ -1,3 +1,0 @@
-cable_secteur = valide
-bouton_alimentation = actionne
-voyants_led = eteints
