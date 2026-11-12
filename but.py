@@ -1,4 +1,4 @@
-from Fait import fait
+from fait import Fait
 class but(fait):
     def __int__(self,a,op,v):
         if(op=="="):
