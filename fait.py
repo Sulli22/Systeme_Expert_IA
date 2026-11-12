@@ -1,4 +1,4 @@
-class fait:
+class Fait:
    def  __init__(self,a,op,v):
     self.attribut=a
     self.operateur=op
