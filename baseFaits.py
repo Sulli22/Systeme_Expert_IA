@@ -1,4 +1,5 @@
 from regle import Regle
+from Fait import fait
 
 class BaseFaits:
     def __init__(self, liste_faits):
@@ -34,7 +35,7 @@ class BaseFaits:
                                     #print('c ' +c)
                                 i=i+3
                               
-                                self.faits.append((a,b,c))
+                                self.faits.append(fait(a,b,c))
                             else:
                                 i=i+1
                             #print('test')
@@ -51,9 +52,9 @@ class BaseFaits:
                 self.faits.append(alors)
 
 
-    def but_atteint(self):
+    def but_atteint(self,but):
         for i in self.faits:
-            if 'cause_racine' == i[0]:
+            if i==but:
                 return True
 
         return False

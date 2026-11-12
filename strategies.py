@@ -2,14 +2,15 @@ from baseFaits import BaseFaits
 from regle import Regle
 
 
-def chainage_avant(BaseFaits, Regles):
+def chainage_avant(BaseFaits, Regles,but):
   i = 0
-  while not (BaseFaits.but_atteint()) and i < len(Regles):  # Boucle qui continue tant que notre base de faits n'a pas atteint une conclusion, ou tant qu'il reste des règles à tester
+  while not (BaseFaits.but_atteint(but)) and i < len(Regles):  # Boucle qui continue tant que notre base de faits n'a pas atteint une conclusion, ou tant qu'il reste des règles à tester
     if Regles[i].verif(BaseFaits.faits):  # On vérifie si la règle est utilisable avec notre base de faits
       BaseFaits.ajout_fait(Regles[i])  # Si la règle est vérifiée, on ajoute alors les faits déduits de cette règle
       i = 0 # On remet i à 0 afin de pouvoir revérifier les règles avec les nouveaux faits
     else:
       i += 1
+  return BaseFaits.but_atteint(but)
 
 
 def chainage_arriere(BaseFaits, Regles, but, en_cours=None):  # Ici, on définit une variable qui sert de mémoire temporaire pour la fonction
