@@ -36,3 +36,18 @@ def chainage_arriere(BaseFaits, Regles, but, en_cours=None):  # Ici, on définit
 
   en_cours.remove(but)
   return (False )  # Si on arrive jusque-là, cela signifie que le but initial ne peut pas être vérifié avec nos règles et notre base de faits actuelle
+
+def chainahe_avant_paquet(baseFaits, paquets, but):
+  i=0
+  regles = []
+  while not (baseFaits.but_atteint(but)) and i<len(paquets):
+   
+    for paquet in paquets:
+      if set(paquet.premisses).intersection(baseFaits):
+        regles.append(paquet.regles)
+        paquets.remove(paquet)
+
+    if chainage_avant(baseFaits, regles, but):
+      return True
+    
+  return False
